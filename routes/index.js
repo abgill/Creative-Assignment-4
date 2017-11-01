@@ -1,25 +1,36 @@
 var express = require('express');
 var router = express.Router();
+const igdb = require('igdb-api-node').default;
 
-var board = [];
+router.get('/search', function(req, res, next){
+    const client = igdb('b1f2714751612e6965e06ef50b8e851d'),
+        fwd = response => {
+        //console.log(response.url, JSON.stringify(response.body, null, 2));
+        res.status(200).json(response.body);
+    };
 
-var currentPlayer = 1;
-
-for(var i = 0; i< 7; i++){
-    board.push([]);
-    for(var j = 0; j < 6; j++){
-        board[i][j] = 0;
+    var searchTerm = ' ';
+    if(req.query.q){
+        searchTerm = req.query.q;
     }
-}
 
-router.get('/poll', function(req, res, next) {
-  res.status(200).json(board);
+    /*
+    Search for up to five Zelda games with release dates between 1 Jan and
+    31 Dec 2011, sorted by release date in descending order.
+    */
+    client.games({
+
+        limit: 40,
+        offset: 0,
+        search: searchTerm
+    }, [
+        'name',
+        'release_dates.date',
+        'rating',
+        'cover'
+    ]).then(fwd);
+
 });
 
-router.post('/turn',function (req, res) {
-    console.log('in turn route');
-    console.log(req.body);
-    res.status(200).json('{data: 3}');
-})
 
 module.exports = router;

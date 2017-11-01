@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+<script src="javascripts/app.js"></script>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+  <meta charset="utf-8">
+  <title>Node</title>
+</head>
+<body>
+
+
+  <div id='app' ng-app='app' ng-controller='mainCtrl'>
+
+    <div id="board">
+        <form>
+      <table>
+
+        <tr id="row1">
+          <td class="square"><input type="text" maxlength="1" size="1"></td>
+          <td class="square v"><input type="text" maxlength="1" size="1"></td>
+          <td class="square"><input type="text" maxlength="1" size="1"></td>
+        </tr>
+        <tr id="row2">
+          <td class="square h"><input type="text" maxlength="1" size="1"></td>
+          <td class="square v h"><input type="text" maxlength="1" size="1"></td>
+          <td class="square h"><input type="text" maxlength="1" size="1"></td>
+        </tr>
+        <tr id="row3">
+          <td class="square"><input type="text" maxlength="1" size="1"></td>
+          <td class="square v"><input type="text" maxlength="1" size="1"></td>
+          <td class="square"><input type="text" maxlength="1" size="1"></td>
+        </tr>
+
+      </table>
+            <input type="submit">
+        </form>
+    </div>
+  </div>
+
+</body>
+</html>
