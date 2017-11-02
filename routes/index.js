@@ -3,7 +3,7 @@ var router = express.Router();
 const igdb = require('igdb-api-node').default;
 
 
-var saved = [];
+var saved = [{id: 3122}];
 
 router.get('/search', function(req, res, next){
     const client = igdb('b1f2714751612e6965e06ef50b8e851d'),
@@ -36,24 +36,31 @@ router.get('/search', function(req, res, next){
 
 });
 
-router.get('/getById', function(req, res, next){
+router.get('/getSaved', function(req, res, next){
+    if(saved.length <= 0){
+        res.status(200).json('[]');
+        res.end();
+        return;
+    }
+
     const client = igdb('b1f2714751612e6965e06ef50b8e851d'),
         fwd = response => {
         //console.log(response.url, JSON.stringify(response.body, null, 2));
         res.status(200).json(response.body);
+        res.end();
     };
 
-    var gameId = 0;
-    if(req.query.q){
-        gameId = parseInt(req.query.q);
+    var ids = [];
+    for(var i = 0; i < saved.length; i++){
+        ids.push(saved[i].id);
     }
 
-    /*
-    Search for up to five Zelda games with release dates between 1 Jan and
-    31 Dec 2011, sorted by release date in descending order.
-    */
+    console.log(ids);
+
+    console.log(saved);
+
     client.games({
-        ids : [gameId]
+        ids : ids
     }, [
         'name',
         'id',
@@ -69,9 +76,19 @@ router.post('/save', function(req, res){
     res.status(200).json(saved);
 });
 
-router.get('/getSaved', function(req, res, next){
-    res.status(200).json(saved);
+router.post('/remove', function(req, res){
+    var id = req.query.q;
+
+    for(var i = 0; i < saved.length; i++){
+        if(saved[i].id == req.query.q){
+            saved.splice(i,1);
+            break;
+        }
+    }
+
+    res.status(200).json('{status: success}');
 });
+
 
 
 

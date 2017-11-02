@@ -20,6 +20,7 @@
         <h1>{{result.name}}</h1>
         <img src="{{result.cover.url}}">
         <button ng-click="add(result.id)">add</button>
+        <hr>
     </div>
 </div>
 
@@ -40,7 +41,7 @@
                 console.log("Post failed");
             });
             console.log(id);
-        }
+        };
         $scope.search = function () {
             $http.get("/search?q="+$scope.squery)
                 .then(function(response) {
