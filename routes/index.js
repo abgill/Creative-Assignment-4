@@ -64,11 +64,9 @@ router.get('/getById', function(req, res, next){
 
 });
 
-router.post('/save', function(req, res, next){
-    var newGame = req.body;
-    if(newGame && newGame.id && newGame.comment){
-        saved.push(newGame);
-    }
+router.post('/save', function(req, res){
+    saved.push(req.body)
+    res.status(200).json(saved);
 });
 
 router.get('/getSaved', function(req, res, next){

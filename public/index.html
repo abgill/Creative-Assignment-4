@@ -1,42 +1,55 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
-<script src="javascripts/app.js"></script>
-<link rel="stylesheet" type="text/css" href="stylesheets/style.css">
-  <meta charset="utf-8">
-  <title>Node</title>
-</head>
 <body>
 
-
-  <div id='app' ng-app='app' ng-controller='mainCtrl'>
-
-    <div id="board">
-        <form>
-      <table>
-
-        <tr id="row1">
-          <td class="square"><input type="text" maxlength="1" size="1"></td>
-          <td class="square v"><input type="text" maxlength="1" size="1"></td>
-          <td class="square"><input type="text" maxlength="1" size="1"></td>
-        </tr>
-        <tr id="row2">
-          <td class="square h"><input type="text" maxlength="1" size="1"></td>
-          <td class="square v h"><input type="text" maxlength="1" size="1"></td>
-          <td class="square h"><input type="text" maxlength="1" size="1"></td>
-        </tr>
-        <tr id="row3">
-          <td class="square"><input type="text" maxlength="1" size="1"></td>
-          <td class="square v"><input type="text" maxlength="1" size="1"></td>
-          <td class="square"><input type="text" maxlength="1" size="1"></td>
-        </tr>
-
-      </table>
-            <input type="submit">
-        </form>
+<div ng-app="myApp" ng-controller="searchCtrl">
+    <form ng-submit="search()">
+       <input type="text" ng-model="squery">
+        <input type="submit">
+    </form>
+    <div ng-repeat="result in results">
+        <h1>{{result.name}}</h1>
+        <img src="{{result.cover.url}}">
+        <button ng-click="add(result.id)">add</button>
     </div>
-  </div>
+</div>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('searchCtrl', function($scope, $http) {
+        $scope.squery = "";
+        $scope.results = [];
+        $scope.add = function (id) {
+            $http({
+                url:"/save",
+                method: "POST",
+                data: {id: id}
+            }).success(function(data, status, headers, config) {
+                console.log("Post worked");
+                console.log(data);
+            }).error(function(data, status, headers, config) {
+                console.log("Post failed");
+            });
+            console.log(id);
+        }
+        $scope.search = function () {
+            $http.get("/search?q="+$scope.squery)
+                .then(function(response) {
+                    $scope.results = response.data;
+                });
+           // $scope.results.push($scope.squery);
+        }
+    });
+</script>
 
 </body>
 </html>
