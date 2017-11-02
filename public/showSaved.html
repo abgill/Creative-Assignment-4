@@ -25,18 +25,23 @@
 
     </div>
 </nav>
+<div style="background-color: aliceblue">
+    <h1 class="text-center">Wish List</h1>
+    <hr>
+</div>
 
-<h1 class="text-center">Wish List</h1>
-<hr>
 <div ng-app="myApp" ng-controller="searchCtrl">
     <div class="row text-center" ng-repeat="result in results | orderBy : 'name'">
         <div class="col-md-2 col-md-offset-5">
             <div class="row">
                 <h3>{{result.name}}</h3>
                 <img src="{{result.cover.url}}">
+                <br><br>
+
             </div>
             <div class="row">
-                <button ng-click="remove(result.id)">remove</button>
+                <button ng-click="remove(result.id)">Remove</button>
+                <hr>
             </div>
         </div>
 

@@ -25,7 +25,7 @@
 
 
 <div ng-app="myApp" ng-controller="searchCtrl">
-    <div class="jumbotron text-center">
+    <div class="jumbotron text-center" style="background-color: aliceblue">
         <h1 class="text-center">Gaming Wish List</h1>
         <img src="controller.png" height="200">
         <hr>
@@ -43,7 +43,7 @@
         <h3>{{result.name}}</h3>
         <img src="{{result.cover.url}}">
             <div class="row">
-        <button class="btn" ng-click="add(result.id)">add</button>
+        <button class="btn" ng-click="add(result.id)">Add</button>
             </div>
         <hr>
         </div>
@@ -63,6 +63,7 @@
             }).success(function(data, status, headers, config) {
                 console.log("Post worked");
                 console.log(data);
+                alert("Add successful");
             }).error(function(data, status, headers, config) {
                 console.log("Post failed");
             });
