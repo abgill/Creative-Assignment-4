@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -9,18 +10,43 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+</head>
 <body>
 
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
+    <a class="navbar-brand" href="/">Search</a>
+    <a class="navbar-brand" href="showSaved.html">Wish List</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    </div>
+</nav>
+
+
+
 <div ng-app="myApp" ng-controller="searchCtrl">
-    <form ng-submit="search()">
-       <input type="text" ng-model="squery">
-        <input type="submit">
-    </form>
-    <div ng-repeat="result in results">
-        <h1>{{result.name}}</h1>
-        <img src="{{result.cover.url}}">
-        <button ng-click="add(result.id)">add</button>
+    <div class="jumbotron text-center">
+        <h1 class="text-center">Gaming Wish List</h1>
+        <img src="controller.png" height="200">
         <hr>
+
+        <form ng-submit="search()">
+            <h4>Search for a game to add it to your wishlist</h4>
+            <input type="text" ng-model="squery">
+            <input type="submit">
+        </form>
+
+    </div>
+
+    <div class="text-center" ng-repeat="result in results">
+        <div class="row">
+        <h3>{{result.name}}</h3>
+        <img src="{{result.cover.url}}">
+            <div class="row">
+        <button class="btn" ng-click="add(result.id)">add</button>
+            </div>
+        <hr>
+        </div>
     </div>
 </div>
 

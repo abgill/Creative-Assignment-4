@@ -17,10 +17,6 @@ router.get('/search', function(req, res, next){
         searchTerm = req.query.q;
     }
 
-    /*
-    Search for up to five Zelda games with release dates between 1 Jan and
-    31 Dec 2011, sorted by release date in descending order.
-    */
     client.games({
 
         limit: 40,
@@ -38,7 +34,7 @@ router.get('/search', function(req, res, next){
 
 router.get('/getSaved', function(req, res, next){
     if(saved.length <= 0){
-        res.status(200).json('[]');
+        res.status(200).end('[]');
         res.end();
         return;
     }
